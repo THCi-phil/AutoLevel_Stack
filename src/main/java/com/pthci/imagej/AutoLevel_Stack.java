@@ -130,7 +130,7 @@ public class AutoLevel_Stack implements PlugInFilter {
 			}  //end for min-max scan
 		} //end for slice
 		image.setDisplayRange( minGreyscale, maxGreyscale );
-	} //end public void autoLevel_8bit
+	} //end public void autoLevel_16bit
 	//-----------------------------------------------------
 	
 	
