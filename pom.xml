@@ -8,13 +8,13 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>31.1.0</version>
+		<version>37.0.0</version>
 		<relativePath />
 	</parent>
 
 	<groupId>com.pTHCi</groupId>
 	<artifactId>AutoLevel_Stack</artifactId>
-	<version>0.1.0-BETA_RELEASE_CANDIDATE</version>
+	<version>1.0.0-STABLE_RELEASE</version>
 
 	<name>AutoLevel Stack</name>
 	<description>Maven ImageJ 1.x plugin. AutoLevel whole stack of an 8,16,32-bit greyscale, or colour image</description>
@@ -27,7 +27,7 @@
 	<licenses>
 		<license>
 			<name>MIT No advertising license</name>
-			<url>https://creativecommons.org/publicdomain/zero/1.0/</url>
+			<url>https://github.com/THCi-phil/AutoLevel_Stack/blob/main/MIT%20no%20advertising%20license.txt/</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>

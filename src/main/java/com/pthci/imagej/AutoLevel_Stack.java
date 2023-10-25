@@ -42,6 +42,9 @@ import ij.process.ColorProcessor;
  * also here min is set default before loop as bit-level max, (c.f. in-built method set as 0)
  * so the true min pixel greyscale in the stack is found: in-built method will always find 0.
  *
+ * Based on Johannes Schindelin's template for processing each pixel of either
+ * GRAY8, GRAY16, GRAY32 or COLOR_RGB images.
+ *
  * @author Phil Threlfall-Holmes
  */
 public class AutoLevel_Stack implements PlugInFilter {
@@ -97,6 +100,7 @@ public class AutoLevel_Stack implements PlugInFilter {
 	 * @param image the image (possible multi-dimensional)
 	 */
 	public void process(ImagePlus image) {
+		IJ.showStatus("Rebalancing displayed intensity range...");
 		if      (type == ImagePlus.GRAY8    ) autoLevel_8bit();
 		else if (type == ImagePlus.GRAY16   ) autoLevel_16bit();
 		else if (type == ImagePlus.GRAY32   ) autoLevel_32bit();
@@ -115,6 +119,8 @@ public class AutoLevel_Stack implements PlugInFilter {
 		
 		// slice numbers start with 1 for historical reasons
 		for (int i = 1; i <= nSlices; i++) {
+			IJ.showStatus("Rebalancing displayed intensity range: " + i + " / " + nSlices );
+			IJ.showProgress( i, nSlices );
 			byte[] pixels = (byte[]) image.getStack().getProcessor(i).getPixels();
 			//pixels = ip.getPixels() is a 1-D array, not a 2D array as you would intuit, so pixels[x+y*width] instead of pixels[x,y]
 			//here as per Invert_Image we can just pixelPos++ through the array for maximum speed
@@ -140,6 +146,8 @@ public class AutoLevel_Stack implements PlugInFilter {
 		
 		// slice numbers start with 1 for historical reasons
 		for (int i = 1; i <= nSlices; i++) {
+			IJ.showStatus("Rebalancing displayed intensity range: " + i + " / " + nSlices );
+			IJ.showProgress( i, nSlices );
 			short[] pixels = (short[]) image.getStack().getProcessor(i).getPixels();
 			//Java short is 16 bit signed, so -32,768 to 32,767
 			//Java int is 32 bit, signed -2,147,483,648 to 2,147,483,647
@@ -162,6 +170,8 @@ public class AutoLevel_Stack implements PlugInFilter {
 		
 		// slice numbers start with 1 for historical reasons
 		for (int i = 1; i <= nSlices; i++) {
+			IJ.showStatus("Rebalancing displayed intensity range: " + i + " / " + nSlices );
+			IJ.showProgress( i, nSlices );
 			float[] pixels = (float[]) image.getStack().getProcessor(i).getPixels();
 			//Java short is 16 bit signed, so -32,768 to 32,767
 			//Java int is 32 bit, signed -2,147,483,648 to 2,147,483,647
@@ -189,6 +199,8 @@ public class AutoLevel_Stack implements PlugInFilter {
 		
 		// slice numbers start with 1 for historical reasons
 		for (int i = 1; i <= nSlices; i++) {
+			IJ.showStatus("Rebalancing displayed intensity range: " + i + " / " + nSlices );
+			IJ.showProgress( i, nSlices );
 			int[] pixels = (int[]) image.getStack().getProcessor(i).getPixels();
 			ColorProcessor cp = new ColorProcessor(width, height, pixels);
 			byte[] R = new byte[ sizePixelArray ];
@@ -221,7 +233,10 @@ public class AutoLevel_Stack implements PlugInFilter {
 
 	public void showAbout() {
 		IJ.showMessage("AutoLevel Stack",
-			"setDisplayRange to min and max pixel value in whole stack"
+		        "setDisplayRange to min and max pixel value in whole stack"
+		+"\n" + "not just one slice as per built-in method"
+		+"\n" + "also here min is set default before loop as bit-level max, (c.f. in-built method set as 0)"
+		+"\n" + "so the true min pixel greyscale in the stack is found: in-built method will always find 0."
 		);
 	} //end public void showAbout()
   //-----------------------------------------------------
@@ -248,8 +263,7 @@ public class AutoLevel_Stack implements PlugInFilter {
 		// start ImageJ
 		new ImageJ();
 
-		ImagePlus image = IJ.openImage("d:/20221221 TP1501 phantom 2 - ruler slice1 16bit example.tif");
-		//ImagePlus image = IJ.openImage("d:/vertical spray test_bkgndRmvd.tif");
+		ImagePlus image = IJ.openImage("d:/vertical spray test_bkgndRmvd.tif");
 		//ImagePlus image = IJ.openImage("d:/test16bitBandWinvert.tif");
 		//ImagePlus image = IJ.openImage("d:/test32bitBandWinvert.tif");
 		//magePlus image = IJ.openImage("d:/testRGB.tif");
